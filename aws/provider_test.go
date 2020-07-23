@@ -40,6 +40,46 @@ func init() {
 				*providers = append(*providers, p.(*schema.Provider))
 				return p, nil
 			},
+			"aws.east": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.west": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.alternate": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.us-east-1": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"alternateaccountalternateregion": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.alternateaccountsameregion": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.sameaccountalternateregion": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
+			"aws.third": func() (terraform.ResourceProvider, error) {
+				p := Provider()
+				*providers = append(*providers, p.(*schema.Provider))
+				return p, nil
+			},
 		}
 	}
 	testAccProviderFunc = func() *schema.Provider { return testAccProvider }
@@ -547,9 +587,8 @@ func testAccOrganizationsEnabledPreCheck(t *testing.T) {
 func testAccAlternateAccountProviderConfig() string {
 	//lintignore:AT004
 	return fmt.Sprintf(`
-provider "aws" {
+provider "aws.alternate" {
   access_key = %[1]q
-  alias      = "alternate"
   profile    = %[2]q
   secret_key = %[3]q
 }
@@ -559,9 +598,8 @@ provider "aws" {
 func testAccAlternateAccountAlternateRegionProviderConfig() string {
 	//lintignore:AT004
 	return fmt.Sprintf(`
-provider "aws" {
+provider "aws.alternate" {
   access_key = %[1]q
-  alias      = "alternate"
   profile    = %[2]q
   region     = %[3]q
   secret_key = %[4]q
@@ -574,23 +612,20 @@ provider "aws" {
 func testAccAlternateAccountAndAlternateRegionProviderConfig() string {
 	//lintignore:AT004
 	return fmt.Sprintf(`
-provider "aws" {
+provider "aws.alternateaccountalternateregion" {
   access_key = %[1]q
-  alias      = "alternateaccountalternateregion"
   profile    = %[2]q
   region     = %[3]q
   secret_key = %[4]q
 }
 
-provider "aws" {
+provider "aws.alternateaccountsameregion" {
   access_key = %[1]q
-  alias      = "alternateaccountsameregion"
   profile    = %[2]q
   secret_key = %[4]q
 }
 
-provider "aws" {
-  alias  = "sameaccountalternateregion"
+provider "aws.sameaccountalternateregion" {
   region = %[3]q
 }
 `, os.Getenv("AWS_ALTERNATE_ACCESS_KEY_ID"), os.Getenv("AWS_ALTERNATE_PROFILE"), testAccGetAlternateRegion(), os.Getenv("AWS_ALTERNATE_SECRET_ACCESS_KEY"))
@@ -600,8 +635,7 @@ provider "aws" {
 func testAccAlternateRegionProviderConfig() string {
 	//lintignore:AT004
 	return fmt.Sprintf(`
-provider "aws" {
-  alias  = "alternate"
+provider "aws.alternate" {
   region = %[1]q
 }
 `, testAccGetAlternateRegion())
@@ -612,8 +646,7 @@ func testAccMultipleRegionProviderConfig(regions int) string {
 
 	//lintignore:AT004
 	fmt.Fprintf(&config, `
-provider "aws" {
-  alias  = "alternate"
+provider "aws.alternate" {
   region = %[1]q
 }
 `, testAccGetAlternateRegion())
@@ -621,8 +654,7 @@ provider "aws" {
 	if regions >= 3 {
 		//lintignore:AT004
 		fmt.Fprintf(&config, `
-provider "aws" {
-  alias  = "third"
+provider "aws.third" {
   region = %[1]q
 }
 `, testAccGetThirdRegion())
@@ -662,8 +694,7 @@ provider "aws" {
 func testAccUsEast1RegionProviderConfig() string {
 	//lintignore:AT004
 	return `
-provider "aws" {
-  alias  = "us-east-1"
+provider "aws.us-east-1" {
   region = "us-east-1"
 }
 `
