@@ -190,7 +190,7 @@ func testAccAWSEc2TransitGatewayPeeringAttachmentDataSourceConfigFilter_differen
 		testAccAWSEc2TransitGatewayPeeringAttachmentConfigBasic_differentAccount(rName),
 		fmt.Sprintf(`
 data "aws_ec2_transit_gateway_peering_attachment" "test" {
-  provider = "aws.alternate"
+  provider = "awsalternate"
   filter {
     name   = "transit-gateway-attachment-id"
     values = ["${aws_ec2_transit_gateway_peering_attachment.test.id}"]
@@ -204,7 +204,7 @@ func testAccAWSEc2TransitGatewayPeeringAttachmentDataSourceConfigID_differentAcc
 		testAccAWSEc2TransitGatewayPeeringAttachmentConfigBasic_differentAccount(rName),
 		fmt.Sprintf(`
 data "aws_ec2_transit_gateway_peering_attachment" "test" {
-  provider = "aws.alternate"
+  provider = "awsalternate"
   id = "${aws_ec2_transit_gateway_peering_attachment.test.id}"
 }
 `))

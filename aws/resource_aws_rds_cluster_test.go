@@ -2848,7 +2848,7 @@ resource "aws_rds_cluster" "test" {
 func testAccAWSClusterConfigEncryptedCrossRegionReplica(n int) string {
 	return testAccAlternateRegionProviderConfig() + fmt.Sprintf(`
 data "aws_availability_zones" "alternate" {
-  provider = "aws.alternate"
+  provider = "awsalternate"
 
   state = "available"
 
@@ -2891,7 +2891,7 @@ resource "aws_rds_cluster_instance" "test" {
 }
 
 resource "aws_kms_key" "alternate" {
-  provider    = "aws.alternate"
+  provider    = "awsalternate"
   description = "Terraform acc test %[1]d"
 
   policy = <<POLICY
@@ -2914,7 +2914,7 @@ resource "aws_kms_key" "alternate" {
 }
 
 resource "aws_vpc" "alternate" {
-  provider   = "aws.alternate"
+  provider   = "awsalternate"
   cidr_block = "10.0.0.0/16"
 
   tags = {
@@ -2923,7 +2923,7 @@ resource "aws_vpc" "alternate" {
 }
 
 resource "aws_subnet" "alternate" {
-  provider          = "aws.alternate"
+  provider          = "awsalternate"
   count             = 3
   vpc_id            = aws_vpc.alternate.id
   availability_zone = data.aws_availability_zones.alternate.names[count.index]
@@ -2935,13 +2935,13 @@ resource "aws_subnet" "alternate" {
 }
 
 resource "aws_db_subnet_group" "alternate" {
-  provider   = "aws.alternate"
+  provider   = "awsalternate"
   name       = "test_replica-subnet-%[1]d"
   subnet_ids = aws_subnet.alternate[*].id
 }
 
 resource "aws_rds_cluster" "alternate" {
-  provider                      = "aws.alternate"
+  provider                      = "awsalternate"
   cluster_identifier            = "tf-test-replica-%[1]d"
   db_subnet_group_name          = aws_db_subnet_group.alternate.name
   database_name                 = "mydb"
