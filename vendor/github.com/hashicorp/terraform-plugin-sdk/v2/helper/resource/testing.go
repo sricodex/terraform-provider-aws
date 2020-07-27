@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
-	tftest "github.com/hashicorp/terraform-plugin-test"
+	tftest "github.com/hashicorp/terraform-plugin-test/v2"
 	testing "github.com/mitchellh/go-testing-interface"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
@@ -276,15 +276,30 @@ type TestCase struct {
 	// acceptance tests, such as verifying that keys are setup.
 	PreCheck func()
 
+	// ProviderFactories can be specified for the providers that are valid.
+	//
+	// These are the providers that can be referenced within the test. Each key
+	// is an individually addressable provider. Typically you will only pass a
+	// single value here for the provider you are testing. Aliases are not
+	// supported by the test framework, so to use multiple provider instances,
+	// you should add additional copies to this map with unique names. To set
+	// their configuration, you would reference them similar to the following:
+	//
+	//  provider "my_factory_key" {
+	//    # ...
+	//  }
+	//
+	//  resource "my_resource" "mr" {
+	//    provider = my_factory_key
+	//
+	//    # ...
+	//  }
+	ProviderFactories map[string]func() (*schema.Provider, error)
+
 	// Providers is the ResourceProvider that will be under test.
 	//
-	// Alternately, ProviderFactories can be specified for the providers
-	// that are valid. This takes priority over Providers.
-	//
-	// The end effect of each is the same: specifying the providers that
-	// are used within the tests.
-	Providers         map[string]*schema.Provider
-	ProviderFactories map[string]func() (*schema.Provider, error)
+	// Deprecated: Providers is deprecated, please use ProviderFactories
+	Providers map[string]*schema.Provider
 
 	// PreventPostDestroyRefresh can be set to true for cases where data sources
 	// are tested alongside real resources
@@ -478,10 +493,10 @@ func Test(t testing.T, c TestCase) {
 
 	logging.SetOutput()
 
+	// Copy any explicitly passed providers to factories, this is for backwards compatibility.
 	if len(c.Providers) > 0 {
 		c.ProviderFactories = map[string]func() (*schema.Provider, error){}
 
-		t.Log("TestCase.Providers id deprecated, please use ProviderFactories")
 		for name, p := range c.Providers {
 			if _, ok := c.ProviderFactories[name]; ok {
 				t.Fatalf("ProviderFactory for %q already exists, cannot overwrite with Provider", name)

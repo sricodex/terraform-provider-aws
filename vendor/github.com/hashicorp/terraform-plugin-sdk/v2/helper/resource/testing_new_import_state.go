@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/davecgh/go-spew/spew"
-	tftest "github.com/hashicorp/terraform-plugin-test"
+	tftest "github.com/hashicorp/terraform-plugin-test/v2"
 	testing "github.com/mitchellh/go-testing-interface"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
