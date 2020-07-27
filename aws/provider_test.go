@@ -39,10 +39,8 @@ func init() {
 		// effectively singletons for the lifecycle of a resource.Test
 		var providerNames = []string{"aws", "awseast", "awswest", "awsalternate", "awsus-east-1", "awsalternateaccountalternateregion", "awsalternateaccountsameregion", "awssameaccountalternateregion", "awsthird"}
 		var factories = make(map[string]func() (*schema.Provider, error), len(providerNames))
-		var singletons = make(map[string]*schema.Provider, len(providerNames))
 		for _, name := range providerNames {
 			p := Provider()
-			singletons[name] = p
 			factories[name] = func() (*schema.Provider, error) {
 				return p, nil
 			}
