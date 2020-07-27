@@ -229,7 +229,7 @@ jobs:
     - run: golangci-lint run ./awsproviderlint/...
 
   goreleaser:
-    needs: [go_mod_download]
+    needs: [go_build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
