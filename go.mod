@@ -14,13 +14,14 @@ require (
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/hashicorp/go-version v1.2.1
 	github.com/hashicorp/terraform-plugin-sdk v1.14.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2.0.20200729065033-163d52d387f4
+	github.com/hashicorp/terraform-plugin-test v1.4.0 // indirect
 	github.com/hashicorp/vault v0.10.4
 	github.com/jen20/awspolicyequivalence v1.1.0
 	github.com/katbyte/terrafmt v0.2.1-0.20200303174203-e6a3e82cb21b
 	github.com/mitchellh/copystructure v1.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pquerna/otp v1.2.0
-	golang.org/x/tools v0.0.0-20200710042808-f1c4188a97a1
+	golang.org/x/tools v0.0.0-20200713011307-fd294ab11aed
 	gopkg.in/yaml.v2 v2.3.0
 )
