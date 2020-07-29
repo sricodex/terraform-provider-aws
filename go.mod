@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/hashicorp/go-version v1.2.1
 	github.com/hashicorp/terraform-plugin-sdk v1.14.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2.0.20200729065033-163d52d387f4
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2.0.20200729175640-93877239afe8
 	github.com/hashicorp/terraform-plugin-test v1.4.0 // indirect
 	github.com/hashicorp/vault v0.10.4
 	github.com/jen20/awspolicyequivalence v1.1.0

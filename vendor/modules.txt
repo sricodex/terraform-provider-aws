@@ -616,7 +616,7 @@ github.com/hashicorp/terraform-plugin-sdk/internal/version
 github.com/hashicorp/terraform-plugin-sdk/meta
 github.com/hashicorp/terraform-plugin-sdk/plugin
 github.com/hashicorp/terraform-plugin-sdk/terraform
-# github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2.0.20200729065033-163d52d387f4
+# github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0-rc.2.0.20200729175640-93877239afe8
 ## explicit
 github.com/hashicorp/terraform-plugin-sdk/v2/diag
 github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest
