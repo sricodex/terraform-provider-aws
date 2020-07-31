@@ -293,7 +293,7 @@ resource "aws_ecr_repository" "default" {
 func testAccAWSEcrRepositoryConfig_immutability(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ecr_repository" "default" {
-  name = %q
+  name                 = %q
   image_tag_mutability = "IMMUTABLE"
 }
 `, rName)
@@ -303,6 +303,7 @@ func testAccAWSEcrRepositoryConfig_image_scanning_configuration(rName string, sc
 	return fmt.Sprintf(`
 resource "aws_ecr_repository" "default" {
   name = %q
+
   image_scanning_configuration {
     scan_on_push = %t
   }
