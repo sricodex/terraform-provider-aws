@@ -49,7 +49,8 @@ func TestAccDataSourceAwsPricingProduct_redshift(t *testing.T) {
 }
 
 func testAccDataSourceAwsPricingProductConfigEc2(dataName string, instanceType string) string {
-	return fmt.Sprintf(`data "aws_pricing_product" "%s" {
+	return fmt.Sprintf(`
+data "aws_pricing_product" "%s" {
 		service_code = "AmazonEC2"
 	  
 		filters {
@@ -91,7 +92,8 @@ func testAccDataSourceAwsPricingProductConfigEc2(dataName string, instanceType s
 }
 
 func testAccDataSourceAwsPricingProductConfigRedshift() string {
-	return `data "aws_pricing_product" "test" {
+	return `
+data "aws_pricing_product" "test" {
 		service_code = "AmazonRedshift"
 	  
 		filters {
@@ -105,27 +107,3 @@ func testAccDataSourceAwsPricingProductConfigRedshift() string {
 		}
 }
 `
-}
-
-func testAccPricingCheckValueIsJSON(data string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rs, ok := s.RootModule().Resources[data]
-
-		if !ok {
-			return fmt.Errorf("Can't find resource: %s", data)
-		}
-
-		result := rs.Primary.Attributes["result"]
-		var objmap map[string]*json.RawMessage
-
-		if err := json.Unmarshal([]byte(result), &objmap); err != nil {
-			return fmt.Errorf("%s result value (%s) is not JSON: %s", data, result, err)
-		}
-
-		if len(objmap) == 0 {
-			return fmt.Errorf("%s result value (%s) unmarshalling resulted in an empty map", data, result)
-		}
-
-		return nil
-	}
-}
